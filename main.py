@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+import pandas as pd
 
 
 def create_connection(host_name, user_name, user_password, database_name=None):
@@ -90,12 +91,19 @@ def execute_query_print(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
-        result = cursor.fetchall()  # Отримати всі рядки результату запиту
-        for row in result:
-            print(row)  # Вивести кожен рядок
+        result = cursor.fetchall()
+
+        # Преобразовать результат в объект DataFrame
+        df = pd.DataFrame(result, columns=[i[0] for i in cursor.description])
+
+        # Вывести DataFrame
+        print(df)
+
         print("Запит виконано успішно.")
     except Error as e:
         print(f"Произошла ошибка при выполнении запроса: {e}")
+    finally:
+        cursor.close()
 
 
 def display(conn):
