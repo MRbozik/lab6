@@ -241,10 +241,10 @@ if __name__ == "__main__":
     conn = create_connection(**config)
 
     # Создание базы данных
-    # create_database(conn)
+    create_database(conn)
 
     # Создание таблиц
-    # create_tables(conn)
+    create_tables(conn)
     # Insert Tables
     conn = create_connection(**config1)
 
